@@ -10,8 +10,8 @@ inline void destroy(double *) {}
 #define define_dynamic_array(mytype) \
   struct dynamic_array(mytype) {     \
     mytype *arr = nullptr;           \
-    long long size = 0;              \
-    long long used = 0;              \
+    size_t size = 0;                 \
+    size_t used = 0;                 \
   }
 
 #define define_arr_destructor(type)            \
@@ -49,16 +49,33 @@ inline void destroy(double *) {}
     }                                                \
   }
 
-#define define_pop(type)                        \
-  int pop(dynamic_array(type) * vector) {       \
-    if (vector->used > 0) {                     \
+#define define_pop(type)                         \
+  int pop(dynamic_array(type) * vector) {        \
+    if (vector->used > 0) {                      \
       destroy(vector->arr + (vector->used - 1)); \
-      --vector->used;                           \
-    }                                           \
+      --vector->used;                            \
+      return 0;                                  \
+    }                                            \
+    return 1;                                    \
+  }
+
+#define define_get(type)                                       \
+  type *get_elem(dynamic_array(type) * vector, size_t index) { \
+    return (vector->arr + index);                              \
+  }
+
+#define define_print(type)                       \
+  void print_vec(dynamic_array(type) * vector) { \
+    for (int i = 0; i < vector->size; ++i) {     \
+      printf("%d ", *(vector->arr + i));         \
+    }                                            \
+    putchar('\n');                               \
   }
 
 #define define_vector(type)    \
   define_dynamic_array(type);  \
-  define_arr_destructor(type); \
   define_pop(type);            \
-  define_resize(type);
+  define_arr_destructor(type); \
+  define_resize(type);         \
+  define_get(type);            \
+  define_print(type);
