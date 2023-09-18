@@ -1,4 +1,3 @@
-#include "colors.h"
 
 #define define_sort(type)                                                      \
   void swap(type* first, type* second) {                                       \
@@ -35,9 +34,11 @@
                                                                                \
   type* Partition(type* begin, type* end, int (*comparator)(type*, type*)) {   \
     --end;                                                                     \
-    type* pivot_ptr = (begin + (end - begin) / 2);                             \
+    long long a = rand() % (end - begin);\
+    type* pivot_ptr = (begin + a);                             \
+    assert(pivot_ptr <= end);                                                  \
     type elem = *pivot_ptr;                                                    \
-    for (type* runner = beginning; runner < ending; ++runner) {                \
+    /*for (type* runner = beginning; runner < ending; ++runner) {              \
       if (runner == pivot_ptr) {                                               \
         printf("%s%d%s ", "\033[0;31m", *runner, "\033[0m");                   \
         continue;                                                              \
@@ -48,7 +49,7 @@
         printf("%d ", *runner);                                                \
       }                                                                        \
     }                                                                          \
-    putchar('\n');                                                             \
+    putchar('\n');  */                                                         \
                                                                                \
     --begin;                                                                   \
     ++end;                                                                     \
@@ -65,18 +66,17 @@
       }                                                                        \
       swap(begin, end);                                                        \
     }                                                                          \
-    for (type* runner = beginning; runner < ending; ++runner) {                \
-      printf("%d ", *runner);                                                  \
-    }                                                                          \
-    putchar('\n');                                                             \
     return end;                                                                \
   }                                                                            \
                                                                                \
   size_t quick_sort(type* begin, type* end, int (*comparator)(type*, type*)) { \
+    assert(begin != nullptr);                                                  \
+    assert(end != nullptr);                                                    \
+    ++count_recursion;                                                         \
     if (begin < end - 1) {                                                     \
       type* pivot = Partition(begin, end, comparator);                         \
+      quick_sort(begin, pivot - 1, comparator);                                    \
       quick_sort(pivot + 1, end, comparator);                                  \
-      quick_sort(begin, pivot + 1, comparator);                                    \
     }                                                                          \
     return 0;                                                                  \
   }
