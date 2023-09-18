@@ -72,7 +72,6 @@
   size_t quick_sort(type* begin, type* end, int (*comparator)(type*, type*)) { \
     assert(begin != nullptr);                                                  \
     assert(end != nullptr);                                                    \
-    ++count_recursion;                                                         \
     if (begin < end - 1) {                                                     \
       type* pivot = Partition(begin, end, comparator);                         \
       quick_sort(begin, pivot - 1, comparator);                                    \
