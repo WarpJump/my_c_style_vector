@@ -30,9 +30,7 @@ inline void destroy(double *) {}
     if ((vector == nullptr) || (size == 0)) {                                  \
       return 1;                                                                \
     }                                                                          \
-    if (vector->arr == nullptr) {                                              \
-      vector->arr = reinterpret_cast<type *>(calloc(size, sizeof(type)));      \
-    } else {                                                                   \
+    else {                                                                   \
       vector->arr =                                                            \
           reinterpret_cast<type *>(realloc(vector->arr, size * sizeof(type))); \
     }                                                                          \
